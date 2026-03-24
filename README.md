@@ -1,16 +1,30 @@
-# React + Vite
+# CarbonOps AI
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+CarbonOps AI is an industry-grade ESG (Environmental, Social, and Governance) compliance and emissions monitoring platform. 
 
-Currently, two official plugins are available:
+## 🚀 Features (Phase 1 MVP)
+- **Live Emissions Dashboard**: Real-time sensor monitoring for industrial/heavy-industry plants.
+- **AI Brain Console**: Visualize internal monologues of three specialized LangGraph agents (Monitor, Diagnosis, Action).
+- **Incident Tracking**: Detailed timeline covering anomalies, identified limits, and automated ESG tagging.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🛠 Tech Stack
+- **Frontend**: React (Vite), React Router v6
+- **Styling**: Pure CSS architecture using advanced CSS Custom Properties, multi-layer gradients, and Glassmorphism techniques.
+- **Visuals**: Recharts (for dynamic analytics), Lucide React (for crisp SVG icons).
 
-## React Compiler
+## 📂 Architecture
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+A standard enterprise React directory structure is applied:
+- `/src/components` - Isolated, reusable UI units.
+- `/src/layouts` - Structural wrappers like `MainLayout`.
+- `/src/pages` - Routable full-page views.
+- `/src/data` - Data stubs and mock endpoints.
+- `/src/utils` - Reusable domain-agnostic logic and helpers.
 
-## Expanding the ESLint configuration
+## ⚙️ Running Locally
+1. Clone the repository
+2. `npm install`
+3. `npm run dev`
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+*Developed for robust ESG tracking and automated regulatory reporting.*
