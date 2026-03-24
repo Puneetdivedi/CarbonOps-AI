@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Leaf, FileCheck, CircleDollarSign, Plus, Settings2, PlugZap, Activity, LayoutGrid, Zap, ThermometerSnowflake, Hammer } from 'lucide-react';
+import { Leaf, FileCheck, CircleDollarSign, Plus, Settings2, PlugZap, Activity, LayoutGrid, Zap, ThermometerSnowflake, Hammer, BarChart } from 'lucide-react';
 import MetricCard from '../components/MetricCard';
 import EmissionsChart from '../components/EmissionsChart';
 import AgentsPanel from '../components/AgentsPanel';
 import IncidentsTable from '../components/IncidentsTable';
+import FactoryCopilot from '../components/FactoryCopilot';
 import { generateTelemetryStream, generateOEEMetrics, generateFinancialImpact } from '../utils/dataGenerators';
-import { agentsMonologue, incidents, siteHierarchy, currentUser } from '../data/mockData';
+import { agentsMonologue, incidents, siteHierarchy, benchmarking, currentUser } from '../data/mockData';
 
 const Dashboard = () => {
   const [simulationMode, setSimulationMode] = useState('NORMAL');
@@ -14,7 +15,6 @@ const Dashboard = () => {
   const financials = generateFinancialImpact();
 
   useEffect(() => {
-    // Refresh stream on simulation change to show immediate impact
     setData(generateTelemetryStream(simulationMode));
     
     const interval = setInterval(() => {
@@ -72,7 +72,7 @@ const Dashboard = () => {
           </div>
           <div>
             <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 500 }}>Valid Cost Savings (YTD)</div>
-            <div style={{ fontSize: '1.5rem', fontWeight: 600 }}>${(financials.totalSavingsYTD).toLocaleString()} <span style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>- KPI Tracker Active</span></div>
+            <div style={{ fontSize: '1.5rem', fontWeight: 600 }}>${(financials.totalSavingsYTD).toLocaleString()} <span style={{fontSize: '0.85rem', color: 'var(--text-muted)'}}>- Tracking ROI</span></div>
           </div>
         </div>
         <div className="glass" style={{ flex: 1, padding: '1.25rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -97,33 +97,55 @@ const Dashboard = () => {
               <h3 style={{ fontSize: '0.95rem', fontWeight: 500 }}>Live Telemetry (Gas Turbine Alpha) </h3>
               {simulationMode !== 'NORMAL' && <span className="mono-text" style={{ background: 'rgba(255, 61, 0, 0.2)', color: 'var(--accent)', padding: '0.1rem 0.4rem', borderRadius: '4px', fontSize: '0.7rem' }}>FAULT INJECTED</span>}
             </div>
-            <button className="btn btn-outline" style={{ padding: '0.2rem 0.6rem', fontSize: '0.75rem' }}>Configure Stream</button>
+            <button className="btn btn-outline" style={{ padding: '0.2rem 0.6rem', fontSize: '0.75rem' }}>Full Screen</button>
           </div>
           <div style={{ padding: '1rem', height: '350px' }}>
              <EmissionsChart data={data} />
           </div>
         </div>
 
-        {/* AI Agents Workflow Block */}
+        {/* Benchmarking Block */}
         <div className="glass" style={{ display: 'flex', flexDirection: 'column' }}>
            <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--glass-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-              <Activity size={16} color="var(--brand)" />
-              <h3 style={{ fontSize: '0.95rem', fontWeight: 500 }}>Multi-Agent Orchestration Flow</h3>
-              <span className={`status-indicator ${simulationMode !== 'NORMAL' ? 'danger' : 'active'}`}></span>
+              <BarChart size={16} color="var(--success)" />
+              <h3 style={{ fontSize: '0.95rem', fontWeight: 500 }}>Cross-Plant Execution Benchmark</h3>
             </div>
           </div>
-          <div style={{ flex: 1, padding: '0' }}>
-            <AgentsPanel logs={agentsMonologue} />
+          <div style={{ flex: 1, padding: '1rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+            {benchmarking.map((plant, i) => (
+              <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingBottom: '0.75rem', borderBottom: '1px solid rgba(255,255,255,0.05)' }}>
+                <div>
+                  <div style={{ fontSize: '0.85rem', fontWeight: 'bold' }}>{plant.plant}</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{plant.rank}</div>
+                </div>
+                <div style={{ textAlign: 'right' }}>
+                  <div style={{ fontSize: '0.8rem', color: plant.oee > 85 ? 'var(--success)' : 'var(--warning)', fontWeight: 'bold' }}>OEE: {plant.oee}%</div>
+                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Down: {plant.downtime}</div>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
-      {/* Actionable Tables */}
-      <div className="glass">
-        <IncidentsTable incidents={incidents} />
+      {/* AI Orchestration & Incidents */}
+      <div className="main-grid" style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 3fr)', gap: '1.5rem', marginBottom: '1.5rem' }}>
+        <div className="glass" style={{ display: 'flex', flexDirection: 'column' }}>
+           <div style={{ padding: '1rem 1.25rem', borderBottom: '1px solid var(--glass-border)', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+              <Activity size={16} color="var(--brand)" />
+              <h3 style={{ fontSize: '0.95rem', fontWeight: 500 }}>Multi-Agent Workflow</h3>
+              <span className={`status-indicator ${simulationMode !== 'NORMAL' ? 'danger' : 'active'}`}></span>
+          </div>
+          <AgentsPanel logs={agentsMonologue} />
+        </div>
+
+        <div className="glass">
+          <IncidentsTable incidents={incidents} />
+        </div>
       </div>
 
+      <FactoryCopilot />
     </div>
   );
 };

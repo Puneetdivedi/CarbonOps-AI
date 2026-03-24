@@ -1,7 +1,6 @@
 import React from 'react';
-import { Database, TrendingUp, AlertTriangle, Hammer, Target, Activity, CheckCircle, ShieldAlert } from 'lucide-react';
+import { Database, TrendingUp, AlertTriangle, Hammer, Target, Shield, CheckCircle } from 'lucide-react';
 
-// Industrial Asset Hierarchy (Site -> Plant -> Line -> Machine)
 export const siteHierarchy = [
   {
     id: "site-eu-01",
@@ -39,13 +38,19 @@ export const siteHierarchy = [
   }
 ];
 
+export const benchmarking = [
+  { plant: "Plant B (Energy)", oee: 92.4, emissions: "1,200 MT/y", downtime: "4.2h/mo", rank: "1 - Leader" },
+  { plant: "Plant A (Assembly)", oee: 88.1, emissions: "840 MT/y", downtime: "12.5h/mo", rank: "2 - Stable" },
+  { plant: "Plant C (Chem)", oee: 76.5, emissions: "4,500 MT/y", downtime: "28.0h/mo", rank: "3 - Needs Audit" },
+];
+
 export const agentsMonologue = [
   {
     id: 1,
     agent: 'Ingestion Module',
     type: 'agent-monitor',
     icon: <Database size={16} />,
-    message: "[OPC-UA Connector] Synced 1.4TB telemetry from Siemens MindSphere. Scrubbing outliers...",
+    message: "[OPC-UA Connector] Synced 1.4TB telemetry. Missing data interpolated via Kalmann Filter.",
     time: "Just now"
   },
   {
@@ -53,7 +58,7 @@ export const agentsMonologue = [
     agent: 'Anomaly Engine',
     type: 'agent-monitor',
     icon: <Target size={16} color="var(--warning)" />,
-    message: "Threshold deviation detected. Asset m-turbine-1 (Gas Turbine Alpha) vibration variance +4.2mm/s above baseline.",
+    message: "Deviation detected. Asset m-turbine-1 (Gas Turbine Alpha) vibration variance +4.2mm/s above baseline. Noise filtered.",
     time: "1m ago"
   },
   {
@@ -61,7 +66,7 @@ export const agentsMonologue = [
     agent: 'Diagnostic RAG',
     type: 'agent-diagnosis',
     icon: <TrendingUp size={16} color="var(--brand)" />,
-    message: "Analyzing temporal correlation. Vibration spikes match 2024 bearing failure signatures (Confidence: 94.2%). Risk of catastrophic failure in 14h.",
+    message: "Retrieved 1,200 docs. Vibration spikes correlate with 2024 bearing failure signatures. Confidence: 94.2%.",
     time: "2m ago"
   },
   {
@@ -69,7 +74,7 @@ export const agentsMonologue = [
     agent: 'Action Planner',
     type: 'agent-action',
     icon: <Hammer size={16} color="var(--success)" />,
-    message: "[PENDING APPROVAL] SAP Work Order #9042 created. Suggested action: Replace main anterior bearing. Estimated downtime: 45m. ROI impact: Prevents $12k loss.",
+    message: "[PENDING HUMAN APPROVAL] SAP Work Order #9042 generated. Suggested action: Replace main anterior bearing. Escalating to Plant Manager.",
     time: "3m ago"
   }
 ];
@@ -82,8 +87,15 @@ export const incidents = [
     status: "Pending Approval", 
     time: "1m ago", 
     severity: "CRITICAL",
+    risk: "High",
+    confidence: 94.2,
     assignee: "Eng. M. Schmidt",
-    reasoning: "Vibration signature matched historical bearing failure template."
+    reasoning: "Vibration signature matched historical bearing failure template from Q4 2024.",
+    xai: {
+      what: "Vibration is steadily increasing alongside minute temperature rises.",
+      why: "The anterior bearing is likely losing lubrication, increasing friction.",
+      signals: ["Vibration at 4.5mm/s", "Temp at 760°C", "Load remains flat"]
+    }
   },
   { 
     id: "WO-9041", 
@@ -92,18 +104,15 @@ export const incidents = [
     status: "Diagnosing", 
     time: "2h ago", 
     severity: "MEDIUM",
+    risk: "Medium",
+    confidence: 82.1,
     assignee: "Auto-AI",
-    reasoning: "Power draw 8% above expected load curve for current batch size." 
-  },
-  { 
-    id: "WO-9040", 
-    equipment: "Boiler System 1", 
-    issue: "CO2 Emissions Baseline Exceeded", 
-    status: "Resolved", 
-    time: "Yesterday", 
-    severity: "HIGH",
-    assignee: "Eng. J. Doe",
-    reasoning: "O2 trim calibration drift."
+    reasoning: "Power draw 8% above expected load curve for current batch size.",
+    xai: {
+      what: "Machine is using more power than normal to produce the same goods.",
+      why: "Likely a hydraulic fluid leak causing the pump to run 20% harder.",
+      signals: ["Power draw at 112kW", "Pressure variance 4%"]
+    }
   },
 ];
 
