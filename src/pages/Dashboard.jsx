@@ -1,78 +1,96 @@
 import React, { useState, useEffect } from 'react';
-import { Activity, BarChart3, ShieldAlert, CheckCircle, FileText } from 'lucide-react';
+import { Activity, ShieldAlert, Cpu, Zap, Thermometer, Gauge, Wind } from 'lucide-react';
 import MetricCard from '../components/MetricCard';
 import EmissionsChart from '../components/EmissionsChart';
 import AgentsPanel from '../components/AgentsPanel';
 import IncidentsTable from '../components/IncidentsTable';
-import { generateRealtimeEmissions } from '../utils/dataGenerators';
+import { generateRealtimeMultiMetrics } from '../utils/dataGenerators';
 import { agentsMonologue, incidents } from '../data/mockData';
 
 const Dashboard = () => {
-  const [data, setData] = useState(generateRealtimeEmissions());
+  const [data, setData] = useState(generateRealtimeMultiMetrics());
 
   useEffect(() => {
     const interval = setInterval(() => {
       setData((prev) => {
         const newData = [...prev.slice(1)];
-        const lastCO2 = parseFloat(prev[prev.length - 1].co2);
+        const last = prev[prev.length - 1];
         const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+        
+        let newTemp = parseFloat(last.temp) + (Math.random() - 0.5) * 8;
+        let newPressure = parseFloat(last.pressure) + (Math.random() - 0.5) * 2;
+        let newCO2 = parseFloat(last.co2) + (Math.random() - 0.5) * 5;
+
         newData.push({
           time,
-          co2: ((lastCO2 + (Math.random() - 0.5) * 10)).toFixed(1),
-          threshold: 150
+          temp: newTemp.toFixed(1),
+          pressure: newPressure.toFixed(1),
+          co2: newCO2.toFixed(1),
+          vibration: (parseFloat(last.vibration) + (Math.random() - 0.5) * 0.1).toFixed(2),
+          co2Threshold: 150,
+          tempThreshold: 720
         });
         return newData;
       });
-    }, 5000);
+    }, 4000);
     return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="dashboard-container fade-in">
-      <div className="dashboard-header">
+      <div className="dashboard-header" style={{ borderBottom: '1px solid var(--glass-border)', paddingBottom: '1rem', marginBottom: '1rem' }}>
         <div className="dashboard-title">
-          <h2>Site Overview</h2>
-          <p>Plant Alpha • Mumbai, India</p>
+          <h2 style={{ fontSize: '2rem', textShadow: '0 0 10px rgba(0, 255, 255, 0.5)', color: 'var(--primary)' }}>
+            UNIVERSAL SYSTEM HYPER-VISOR
+          </h2>
+          <p className="mono-text" style={{ color: 'var(--secondary)' }}>Global Operations Network • Omni-Node Active</p>
         </div>
-        <button className="btn btn-primary">
-          <FileText size={18} />
-          Generate Compliance Report
-        </button>
+        <div style={{ display: 'flex', gap: '1rem' }}>
+          <button className="btn btn-outline" style={{ color: 'var(--accent)', borderColor: 'var(--accent)' }}>
+            <ShieldAlert size={18} /> OVERRIDE
+          </button>
+          <button className="btn btn-ai">
+            <Cpu size={18} /> DEPLOY AI TASK FORCE
+          </button>
+        </div>
       </div>
 
       <div className="metrics-grid">
         <MetricCard
-          title="Total CO2 Emitted"
-          icon={<BarChart3 size={18} />}
-          value="42.8"
-          unit="tons"
-          trend="↓ 3.2% from last week"
-          trendUp={true}
-        />
-        <MetricCard
-          title="Live Sensor Status"
-          icon={<Activity size={18} />}
-          value="98.5"
-          unit="%"
-          trend="All critical nodes online"
-          trendUp={true}
-        />
-        <MetricCard
-          title="Active Anomalies"
-          icon={<ShieldAlert size={18} />}
-          value="1"
-          unit="critical"
-          trend="Boiler 3 needs attention"
+          title="CORE THERMAL"
+          icon={<Thermometer size={18} />}
+          value={data[data.length-1].temp}
+          unit="°C"
+          trend="Critical Zone Approaching"
           trendUp={false}
-          borderColor="rgba(255, 61, 0, 0.3)"
+          borderColor={data[data.length-1].temp > 720 ? "var(--accent)" : "var(--primary)"}
         />
         <MetricCard
-          title="ESG Compliance Score"
-          icon={<CheckCircle size={18} />}
-          value="A"
-          unit="Tier"
-          trend="Ready for EU ETS audit"
+          title="SYSTEM PRESSURE"
+          icon={<Gauge size={18} />}
+          value={data[data.length-1].pressure}
+          unit="PSI"
+          trend="High Volatility"
+          trendUp={false}
+          borderColor={data[data.length-1].pressure > 100 ? "var(--warning)" : "var(--primary)"}
+        />
+        <MetricCard
+          title="EMISSIONS (CO2 EQ)"
+          icon={<Wind size={18} />}
+          value={data[data.length-1].co2}
+          unit="ppm"
+          trend="Correlated with Thermal Spike"
+          trendUp={false}
+          borderColor={data[data.length-1].co2 > 150 ? "var(--accent)" : "var(--primary)"}
+        />
+        <MetricCard
+          title="NETWORK INTEGRITY"
+          icon={<Activity size={18} />}
+          value="99.9"
+          unit="%"
+          trend="LangGraph Synced"
           trendUp={true}
+          borderColor="var(--success)"
         />
       </div>
 

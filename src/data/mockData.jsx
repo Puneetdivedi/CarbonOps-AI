@@ -1,59 +1,59 @@
 import React from 'react';
-import { Activity, Search, Cpu, Wrench, FileText, AlertTriangle } from 'lucide-react';
+import { Network, Search, Cpu, Wrench, ShieldAlert, Zap, RadioTower } from 'lucide-react';
 
 export const agentsMonologue = [
   {
     id: 1,
-    agent: 'Monitor',
+    agent: 'Omni-Monitor',
     type: 'agent-monitor',
-    icon: <Activity size={20} />,
-    message: "Scanning live data streams. 98% sensors active.",
-    time: "10:30 AM"
+    icon: <RadioTower size={20} />,
+    message: "Initializing universal protocols. Syncing 1,402 IoT sensors across Thermal, Pressure, & Bio-nodes. Integrity 100%.",
+    time: "10:30:12 AM"
   },
   {
     id: 2,
-    agent: 'Monitor',
+    agent: 'Omni-Monitor',
     type: 'agent-monitor',
-    icon: <AlertTriangle size={20} />,
-    message: "ALERT: Sudden CO2 emission spike detected from Boiler #3. Current output: 182 ppm (Limit: 150 ppm).",
-    time: "10:35 AM"
+    icon: <ShieldAlert size={20} color="var(--accent)" />,
+    message: "CRITICAL ANOMALY: Cascade failure detected. Temp spiking (732°C), Pressure surging (105 PSI). Correlated CO2 burst incoming.",
+    time: "10:35:04 AM"
   },
   {
     id: 3,
-    agent: 'Diagnosis',
+    agent: 'Deep-Diagnosis',
     type: 'agent-diagnosis',
-    icon: <Search size={20} />,
-    message: "Running RAG on equipment manual & past incident logs. Analyzing...",
-    time: "10:36 AM"
+    icon: <Search size={20} color="var(--secondary)" />,
+    message: "Intercepting datastream. Engaging Hyper-RAG across 4.2M technical schematics universally. Isolating multivariate vectors...",
+    time: "10:35:11 AM"
   },
   {
     id: 4,
-    agent: 'Diagnosis',
+    agent: 'Deep-Diagnosis',
     type: 'agent-diagnosis',
-    icon: <Cpu size={20} />,
-    message: "Root cause identified: Boiler 3 running at 112% load. Potential valve leak causing incomplete combustion.",
-    time: "10:37 AM"
+    icon: <Network size={20} color="var(--secondary)" />,
+    message: "ROOT CAUSE FOUND (99.8% Confidence): Synchronous failure in Turbine Alpha micro-valve array causing fuel-air mixture dislocation. Cascading to thermal runaway.",
+    time: "10:35:45 AM"
   },
   {
     id: 5,
-    agent: 'Action',
+    agent: 'Global-Action',
     type: 'agent-action',
-    icon: <Wrench size={20} />,
-    message: "Scheduling corrective work order for Maintenance Team. Adjusting Boiler 3 load to 85% temporarily.",
-    time: "10:38 AM"
+    icon: <Cpu size={20} color="var(--primary)" />,
+    message: "Executing autonomous hard-override. Throttling Turbine Alpha fuel cells by 40%. Engaging secondary cooling loops universally.",
+    time: "10:36:02 AM"
   },
   {
     id: 6,
-    agent: 'Action',
+    agent: 'Global-Action',
     type: 'agent-action',
-    icon: <FileText size={20} />,
-    message: "Drafting anomaly event for automated ESG compliance report. Logging to EU ETS registry format.",
-    time: "10:39 AM"
+    icon: <Wrench size={20} color="var(--primary)" />,
+    message: "Stabilization achieved. Auto-generating preemptive maintenance strike vector for engineering corps. ESG + safety logs locked and vaulted cryptographically.",
+    time: "10:36:40 AM"
   }
 ];
 
 export const incidents = [
-  { id: "INC-9011", equipment: "Boiler 3", issue: "Load Exceeded (112%)", status: "Critical", time: "10:35 AM" },
-  { id: "INC-9010", equipment: "Ventilation B", issue: "Filter Clogged", status: "Warning", time: "08:14 AM" },
-  { id: "INC-9009", equipment: "Generator 1", issue: "Routine Maintenance", status: "Resolved", time: "Yesterday" },
+  { id: "SYS-OMNI-001", equipment: "Turbine Alpha", issue: "Micro-valve thermal runaway", status: "Auto-Terminated", time: "10:36 AM", severity: "CRITICAL" },
+  { id: "SYS-GEO-442", equipment: "Grid Interconnect B", issue: "Phase misalignment", status: "Diagnosing", time: "09:22 AM", severity: "HIGH" },
+  { id: "SYS-BIO-110", equipment: "Ventilation Array", issue: "Particulate filter dense", status: "Resolved", time: "Yesterday", severity: "PREVENTATIVE" },
 ];
