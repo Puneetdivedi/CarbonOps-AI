@@ -1,0 +1,16 @@
+[
+  {
+    "documentId": "DOC-MANUAL-T800",
+    "filename": "Gas_Turbine_Bearing_Maintenance_T800.pdf",
+    "content": "SECTION 4.2.1: MAIN ANTERIOR BEARING WEAR. If high-frequency vibrations exceed 4.0mm/s simultaneously with a temperature rise above 740C, the main anterior bearing is likely experiencing catastrophic lubrication loss. Immediate shutdown and replacement via SAP Work Order is required to prevent a rotor explosion.",
+    "vectorEmbeddings": "mock_vector_1029302_alpha",
+    "lastIndexed": "2026-03-22T08:00:00Z"
+  },
+  {
+    "documentId": "DOC-MANUAL-BOILER",
+    "filename": "Siemens_Boiler_O2_Trim_Specs.pdf",
+    "content": "SECTION 9.1: OXYGEN TRIM FAILURE. The O2 trim system maintains thermal efficiency. If CO2 output spikes suddenly alongside a sudden drop in power output by 8%, the O2 trim servo is likely jammed in an open position and must be manually recalibrated.",
+    "vectorEmbeddings": "mock_vector_998371_beta",
+    "lastIndexed": "2026-03-24T10:15:00Z"
+  }
+]

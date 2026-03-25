@@ -1,0 +1,24 @@
+{
+  "system": "CarbonOps GenAI Multi-Agent Workflow Engine",
+  "workflow_type": "Low-Code Drag-and-Drop Pipeline",
+  "nodes": [
+    {
+      "step": 1,
+      "agent": "Telemetry_Ingestion_LLM",
+      "action": "Connect Modbus API -> Clean Data -> Detect Outliers",
+      "framework": "LangChain"
+    },
+    {
+      "step": 2,
+      "agent": "RAG_Diagnostic_Agent",
+      "action": "Query Vector DB using 'rag_knowledge_base.json' context based on telemetry deviation.",
+      "framework": "LangGraph StateMachine"
+    },
+    {
+      "step": 3,
+      "agent": "Action_Agent",
+      "action": "Draft actionable SAP XML based on RAG output. Prompt Human for Review.",
+      "framework": "GPT-4"
+    }
+  ]
+}
