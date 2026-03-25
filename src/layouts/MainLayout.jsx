@@ -3,12 +3,12 @@ import { Outlet } from 'react-router-dom';
 import Sidebar from '../components/Sidebar';
 import Header from '../components/Header';
 
-const MainLayout = () => {
+const MainLayout = ({ user, onLogout }) => {
   return (
     <div className="app-container">
-      <Sidebar />
+      <Sidebar user={user} onLogout={onLogout} />
       <main className="main-content" style={{ display: 'flex', flexDirection: 'column' }}>
-        <Header />
+        <Header user={user} />
         <div style={{ flex: 1 }}>
           <Outlet />
         </div>
