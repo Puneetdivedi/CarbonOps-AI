@@ -1,28 +1,25 @@
 /**
  * CarbonOps Enterprise Industrial OS
  * 
- * Capability: IAM Simulator - Blocks unauthorized access and establishes active user context (Plant Manager, ESG Officer, etc).
+ * Capability: IAM Authentication Interface
  * Version: 1.0.0
- * Architecture: GenAI / Low Code Data Pipeline
+ * Architecture: Auth Guard Node
  * Owner: Puneet Divedi
  */
-
 import React, { useState } from 'react';
 import { Target, Lock, User } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
-const Login = ({ onLogin }) => {
+const Login = () => {
   const [role, setRole] = useState('Plant Manager');
   const [loading, setLoading] = useState(false);
+  const { login } = useAuth(); // Native invocation of Context instead of Prop drilling
 
   const handleLogin = (e) => {
     e.preventDefault();
     setLoading(true);
     setTimeout(() => {
-      onLogin({
-        name: role === 'Plant Manager' ? 'Sarah Connor' : role === 'ESG Officer' ? 'David Chen' : 'Eng. M. Schmidt',
-        role: role,
-        location: 'Hanover Operations',
-      });
+      login(role); // Connects to the Global Context Layer
       setLoading(false);
     }, 1200);
   };
