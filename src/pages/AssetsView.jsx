@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: SCADA Asset Map - Hierarchical drill-down of industrial machinery (Site > Plant > Line > Machine).
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React from 'react';
 import { Network, Database, Settings, ShieldAlert, CheckCircle, Search, Cpu } from 'lucide-react';
 import { siteHierarchy } from '../data/mockData';

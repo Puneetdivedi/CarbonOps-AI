@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Digital Twin Engine - Pure functions utilizing Kalmann noise to simulate normal operation and fault spikes.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 // dataGenerators.js
 
 // Utility to add random noise to a value

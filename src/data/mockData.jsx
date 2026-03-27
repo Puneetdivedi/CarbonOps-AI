@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Offline Backend - Declares structural SCADA topologies, historical RAG incidents, and agent behaviors.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React from 'react';
 import { Database, TrendingUp, AlertTriangle, Hammer, Target, Shield, CheckCircle } from 'lucide-react';
 

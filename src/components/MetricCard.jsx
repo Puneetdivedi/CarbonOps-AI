@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Universal KPI Card - A hyper-reusable component rendering dynamic threshold data and status icons.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React from 'react';
 
 const MetricCard = ({ title, icon, value, unit, trend, trendUp, borderColor }) => {

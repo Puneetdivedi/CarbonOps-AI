@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Global Control Head - Manages contextual search elements and rapid global navigation utilities.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React from 'react';
 import { Search, Bell, Grid, Plus, ChevronDown } from 'lucide-react';
 

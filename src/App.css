@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Core Layout Styling - Handles primary flexbox wrappers and routing transitions.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 .app-container {
   display: flex;
   height: 100vh;

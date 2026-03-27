@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Generative Chat Interface - Connects to the LLM agent for natural language querying of the factory dataset.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React, { useState } from 'react';
 import { Bot, X, Send, Network } from 'lucide-react';
 

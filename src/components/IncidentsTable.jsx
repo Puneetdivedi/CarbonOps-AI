@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Human-in-the-Loop Workflow - Manage Actionable SAP tickets generated autonomously by reasoning agents.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React, { useState } from 'react';
 import { Target, AlertTriangle, Eye, Check, X } from 'lucide-react';
 

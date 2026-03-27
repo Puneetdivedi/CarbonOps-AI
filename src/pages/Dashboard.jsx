@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Executive Dashboard - Simulates live IoT telemetry, LangGraph Workflow tracking, and OEE metrics display.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Leaf, FileCheck, CircleDollarSign, Plus, Settings2, PlugZap, Activity, LayoutGrid, Zap, ThermometerSnowflake, Hammer, BarChart } from 'lucide-react';
 import MetricCard from '../components/MetricCard';

@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: IAM Simulator - Blocks unauthorized access and establishes active user context (Plant Manager, ESG Officer, etc).
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React, { useState } from 'react';
 import { Target, Lock, User } from 'lucide-react';
 

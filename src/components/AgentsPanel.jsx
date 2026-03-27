@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Agent Trace Viewer - Displays the monologue logs of Ingestion, Analysis, and RAG agents.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React from 'react';
 
 const AgentsPanel = ({ logs }) => {

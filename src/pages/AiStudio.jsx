@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Multi-Agent AI Studio - Visualizes the generative backend orchestrator utilizing LangChain models.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React, { useState, useEffect } from 'react';
 import { Network, Database, BrainCircuit, Activity, Hammer, ArrowRight, Server, Terminal, Share2, Layers } from 'lucide-react';
 

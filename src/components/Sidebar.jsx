@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: Navigation Matrix - Defines hierarchical module access aligned with organizational roles.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, BrainCircuit, Wrench, FileCheck, Target, Factory, History, Shield, LogOut } from 'lucide-react';

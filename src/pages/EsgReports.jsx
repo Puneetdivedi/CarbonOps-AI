@@ -1,3 +1,12 @@
+/**
+ * CarbonOps Enterprise Industrial OS
+ * 
+ * Capability: ESG Compliance Desk - Simulates RAG generation of legal ISSB and EU-ETS emission disclosure PDFs.
+ * Version: 1.0.0
+ * Architecture: GenAI / Low Code Data Pipeline
+ * Owner: Puneet Divedi
+ */
+
 import React, { useState } from 'react';
 import { FileCheck, ShieldAlert, Cpu, DownloadCloud, PieChart, Activity, Fingerprint } from 'lucide-react';
 import { siteHierarchy } from '../data/mockData';
