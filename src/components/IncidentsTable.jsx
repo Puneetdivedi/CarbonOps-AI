@@ -8,13 +8,35 @@
  */
 
 import React, { useState } from 'react';
-import { Target, AlertTriangle, Eye, Check, X } from 'lucide-react';
+import { Target, AlertTriangle, Eye, Check, X, Loader2 } from 'lucide-react';
 
 const IncidentsTable = ({ incidents }) => {
   const [expandedRow, setExpandedRow] = useState(null);
+  const [tableData, setTableData] = useState(incidents);
+  const [processingId, setProcessingId] = useState(null);
 
   const toggleXAI = (id) => {
     setExpandedRow(expandedRow === id ? null : id);
+  };
+
+  const handleAction = (id, type) => {
+    // Simulating an API call to the backend LangGraph node or SAP system to approve/reject the Work Order
+    setProcessingId(id);
+    console.log(`[API] Dispatching SAP Workflow Execution -> Type: ${type}, ID: ${id}`);
+    
+    setTimeout(() => {
+      setTableData(prev => prev.map(incident => {
+        if (incident.id === id) {
+          return {
+            ...incident,
+            status: type === 'APPROVE' ? 'SAP Ticket Deployed' : 'Rejected by Supervisor',
+          };
+        }
+        return incident;
+      }));
+      setProcessingId(null);
+      setExpandedRow(null); // Auto close reasoning
+    }, 1500);
   };
 
   return (
@@ -33,11 +55,11 @@ const IncidentsTable = ({ incidents }) => {
             <th style={{ padding: '0.75rem' }}>Detected Pattern</th>
             <th style={{ padding: '0.75rem' }}>Confidence</th>
             <th style={{ padding: '0.75rem' }}>Status</th>
-            <th style={{ padding: '0.75rem', textAlign: 'right' }}>Actions</th>
+            <th style={{ padding: '0.75rem', textAlign: 'right' }}>Execution Actions</th>
           </tr>
         </thead>
         <tbody>
-          {incidents.map(inc => (
+          {tableData.map(inc => (
             <React.Fragment key={inc.id}>
               <tr style={{ borderBottom: expandedRow !== inc.id ? '1px solid rgba(255, 255, 255, 0.02)' : 'none', background: expandedRow === inc.id ? 'rgba(255,255,255,0.02)' : 'transparent' }}>
                 <td style={{ padding: '0.75rem', fontWeight: 600, fontSize: '0.85rem' }}>{inc.id}</td>
@@ -60,22 +82,26 @@ const IncidentsTable = ({ incidents }) => {
                   <span className={`badge`} style={{
                     padding: '0.25rem 0.5rem', borderRadius: '4px', fontSize: '0.7rem', fontWeight: 600,
                     ...inc.status === 'Pending Approval' ? { background: 'rgba(251, 191, 36, 0.1)', color: 'var(--warning)', border: '1px solid rgba(251, 191, 36, 0.2)' }
-                    : inc.status === 'Diagnosing' ? { background: 'rgba(99, 102, 241, 0.1)', color: 'var(--brand)', border: '1px solid rgba(99, 102, 241, 0.2)' }
-                    : { background: 'rgba(52, 211, 153, 0.1)', color: 'var(--success)', border: '1px solid rgba(52, 211, 153, 0.2)' }
+                    : inc.status === 'SAP Ticket Deployed' ? { background: 'rgba(52, 211, 153, 0.1)', color: 'var(--success)', border: '1px solid rgba(52, 211, 153, 0.2)' }
+                    : inc.status === 'Rejected by Supervisor' ? { background: 'rgba(248, 113, 113, 0.1)', color: 'var(--accent)', border: '1px solid rgba(248, 113, 113, 0.2)' }
+                    : { background: 'rgba(99, 102, 241, 0.1)', color: 'var(--brand)', border: '1px solid rgba(99, 102, 241, 0.2)' }
                   }}>
-                    {inc.status}
+                    {processingId === inc.id ? <Loader2 className="spinner" size={12} style={{ display: 'inline', marginRight: '4px' }} /> : null}
+                    {processingId === inc.id ? 'Processing API...' : inc.status}
                   </span>
                 </td>
                 <td style={{ padding: '0.75rem', textAlign: 'right' }}>
                   <div style={{ display: 'flex', gap: '0.5rem', justifyContent: 'flex-end' }}>
+                    
                     <button onClick={() => toggleXAI(inc.id)} className="btn btn-outline" style={{ padding: '0.3rem 0.6rem', fontSize: '0.75rem' }}>
-                      <Eye size={14} /> View Diagnosis
+                      <Eye size={14} /> Diagnose (XAI)
                     </button>
-                    {inc.status === 'Pending Approval' && (
-                      <>
-                        <button className="btn btn-primary" style={{ padding: '0.3rem', background: 'var(--success)', color: '#000', border: 'none' }}><Check size={14} /></button>
-                        <button className="btn btn-outline" style={{ padding: '0.3rem', borderColor: 'var(--accent)', color: 'var(--accent)' }}><X size={14} /></button>
-                      </>
+                    
+                    {inc.status === 'Pending Approval' && processingId !== inc.id && (
+                      <div style={{ display: 'flex', gap: '0.25rem', borderLeft: '1px solid var(--glass-border)', paddingLeft: '0.5rem' }}>
+                        <button onClick={() => handleAction(inc.id, 'APPROVE')} className="btn" style={{ padding: '0.3rem', width: '32px', display: 'flex', justifyContent: 'center', background: 'rgba(52, 211, 153, 0.15)', color: 'var(--success)', border: '1px solid rgba(52,211,153,0.3)' }} title="Approve Execution"><Check size={16} /></button>
+                        <button onClick={() => handleAction(inc.id, 'REJECT')} className="btn" style={{ padding: '0.3rem', width: '32px', display: 'flex', justifyContent: 'center', background: 'rgba(248, 113, 113, 0.15)', color: 'var(--accent)', border: '1px solid rgba(248,113,113,0.3)' }} title="Reject & Discard"><X size={16} /></button>
+                      </div>
                     )}
                   </div>
                 </td>
@@ -89,11 +115,11 @@ const IncidentsTable = ({ incidents }) => {
                         <div style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>{inc.xai.what}</div>
                       </div>
                       <div style={{ background: 'rgba(0,0,0,0.5)', padding: '1rem', borderRadius: '6px', borderLeft: '2px solid var(--warning)' }}>
-                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Why did it happen? (Root Cause)</div>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Root Cause Prediction</div>
                         <div style={{ fontSize: '0.85rem', marginTop: '0.5rem' }}>{inc.xai.why}</div>
                       </div>
                       <div style={{ background: 'rgba(0,0,0,0.5)', padding: '1rem', borderRadius: '6px', borderLeft: '2px solid var(--success)' }}>
-                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Supporting Telemetry Signals</div>
+                        <div style={{ fontSize: '0.7rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '1px' }}>Supporting Signals (Vector Matching)</div>
                         <ul style={{ fontSize: '0.8rem', marginTop: '0.5rem', paddingLeft: '1rem', color: 'var(--text-muted)' }}>
                           {inc.xai.signals.map((sig, i) => <li key={i}>{sig}</li>)}
                         </ul>
