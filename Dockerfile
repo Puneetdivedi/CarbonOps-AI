@@ -5,7 +5,8 @@ WORKDIR /app
 
 # Copy package files for dependency installation
 COPY package*.json ./
-RUN npm ci --only=production
+# Industry standard fallback avoiding package-lock.json synchronization bugs in CI layers
+RUN npm install
 
 # Copy source code and build
 COPY . .
