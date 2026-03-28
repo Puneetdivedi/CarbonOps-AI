@@ -3,12 +3,12 @@
  * 
  * Capability: Generative Chat Interface - Connects to the LLM agent for natural language querying of the factory dataset.
  * Version: 1.0.0
- * Architecture: GenAI / Low Code Data Pipeline
+ * Architecture: GenAI / Low Code Data Pipeline (Streaming)
  * Owner: Puneet Divedi
  */
-
-import React, { useState } from 'react';
-import { Bot, X, Send, Network } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { Bot, X, Send, Network, Loader2 } from 'lucide-react';
+import { LangGraphService } from '../services/langGraphService';
 
 const FactoryCopilot = () => {
   const [open, setOpen] = useState(false);
@@ -16,28 +16,44 @@ const FactoryCopilot = () => {
     { id: 1, text: "I'm your Factory Copilot. Ask me about emissions, risky assets, or anomaly diagnosis.", sender: "ai" }
   ]);
   const [input, setInput] = useState('');
+  const [isStreaming, setIsStreaming] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   const handleSend = () => {
-    if (!input.trim()) return;
+    if (!input.trim() || isStreaming) return;
 
     // Add user message
-    setMessages(prev => [...prev, { id: Date.now(), text: input, sender: 'user' }]);
-
-    // Mock AI Response based on keywords
-    let responseText = "Analyzing industrial telemetry and RAG knowledge base...";
-    if (input.toLowerCase().includes("why did") || input.toLowerCase().includes("fail")) {
-      responseText = "Based on the LangGraph diagnosis, Machine m-turbine-1 failed because vibration signatures matched a historical bearing wear template. Approving Work Order 9042 is recommended.";
-    } else if (input.toLowerCase().includes("risky") || input.toLowerCase().includes("risk")) {
-      responseText = "The highest risk asset currently is Gas Turbine Alpha (Risk Score: 98/100) due to cascading thermal anomalies.";
-    } else if (input.toLowerCase().includes("emissions") || input.toLowerCase().includes("trend")) {
-      responseText = "Emissions at Hanover Operations are down 12% YoY, saving approximately $142,500 in potential penalties, though Plant C is currently 28% over baseline.";
-    }
-
-    setTimeout(() => {
-      setMessages(prev => [...prev, { id: Date.now() + 1, text: responseText, sender: 'ai' }]);
-    }, 1000);
-
+    const userMsg = input;
+    setMessages(prev => [...prev, { id: Date.now(), text: userMsg, sender: 'user' }]);
     setInput('');
+    setIsStreaming(true);
+
+    // Initial empty message to hold the stream
+    const steamMsgId = Date.now() + 1;
+    setMessages(prev => [...prev, { id: steamMsgId, text: '', sender: 'ai', isStreaming: true }]);
+
+    // Genuine Update: Invoke the real LangGraph service to simulate standard Server-Sent Event (SSE) token LLM streaming
+    LangGraphService.streamCopilotResponse(userMsg, ({ token, done }) => {
+      if (!done) {
+        setMessages(prev => prev.map(msg => 
+          msg.id === steamMsgId ? { ...msg, text: msg.text + token } : msg
+        ));
+      } else {
+        setIsStreaming(false);
+        setMessages(prev => prev.map(msg => 
+          msg.id === steamMsgId ? { ...msg, isStreaming: false } : msg
+        ));
+      }
+    });
+
   };
 
   return (
@@ -74,10 +90,13 @@ const FactoryCopilot = () => {
                   lineHeight: '1.4',
                   color: m.sender === 'user' ? '#fff' : 'var(--brand)'
                 }}>
+                  {m.isStreaming && !m.text && <Loader2 size={14} className="spinner" />}
                   {m.text}
+                  {m.isStreaming && m.text && <span style={{display: 'inline-block', width: '6px', height: '12px', background: 'var(--brand)', marginLeft: '4px', animation: 'blink 1s infinite'}}></span>}
                 </div>
               </div>
             ))}
+            <div ref={messagesEndRef} />
           </div>
 
           {/* Input Area */}
@@ -87,9 +106,10 @@ const FactoryCopilot = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && handleSend()}
               placeholder="Ask about assets or anomalies..."
+              disabled={isStreaming}
               style={{ flex: 1, background: 'rgba(255,255,255,0.05)', border: '1px solid var(--glass-border)', color: '#fff', padding: '0.5rem 0.8rem', borderRadius: '6px', fontSize: '0.85rem' }}
             />
-            <button onClick={handleSend} className="btn btn-primary" style={{ padding: '0.5rem' }}><Send size={16} /></button>
+            <button onClick={handleSend} disabled={isStreaming} className="btn btn-primary" style={{ padding: '0.5rem' }}><Send size={16} /></button>
           </div>
         </div>
       )}

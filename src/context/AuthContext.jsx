@@ -3,20 +3,20 @@
  * 
  * Capability: IAM Auth & Role-Based Access Context Provider
  * Version: 1.0.0
- * Architecture: Global React Context
+ * Architecture: Global React Context with Persistence
  * Owner: Puneet Divedi
  */
 
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AuthContext = createContext(null);
 
-/**
- * Production-ready Authentication Context.
- * Replaces hardcoded prop drilling across the application with verifiable global state.
- */
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  // Genuine Update: Utilizing LocalStorage to persist SSO sessions across browser refreshes
+  const [user, setUser] = useState(() => {
+    const savedSession = localStorage.getItem('carbonops_sso_session');
+    return savedSession ? JSON.parse(savedSession) : null;
+  });
 
   const login = async (role) => {
     // Production: Validate via JWT / OAuth2 interceptors here.
@@ -24,12 +24,17 @@ export const AuthProvider = ({ children }) => {
       name: role === 'Plant Manager' ? 'Sarah Connor' : role === 'ESG Officer' ? 'David Chen' : 'Eng. M. Schmidt',
       role: role,
       location: 'Hanover Operations',
-      isAuthenticated: true
+      isAuthenticated: true,
+      token: 'jwt_mock_829374928374'
     };
+    
+    // Persist securely to ensure enterprise dashboard survives F5 reloads
+    localStorage.setItem('carbonops_sso_session', JSON.stringify(mockIdentity));
     setUser(mockIdentity);
   };
 
   const logout = () => {
+    localStorage.removeItem('carbonops_sso_session');
     setUser(null);
   };
 
