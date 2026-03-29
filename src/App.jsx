@@ -15,6 +15,7 @@ import AssetsView from './pages/AssetsView';
 import EsgReports from './pages/EsgReports';
 import AiStudio from './pages/AiStudio';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { Toaster } from 'react-hot-toast';
 import './App.css';
 
 // Placeholder empty states for new enterprise pages
@@ -61,6 +62,10 @@ function App() {
         ensures the SSO context is globally inherited, discarding complex prop logic 
       */}
       <AuthProvider>
+        <Toaster 
+          position="top-right" 
+          toastOptions={{ style: { background: '#1c1c24', color: '#fff', border: '1px solid rgba(255,255,255,0.1)' } }} 
+        />
         <AppRoutes />
       </AuthProvider>
     </BrowserRouter>

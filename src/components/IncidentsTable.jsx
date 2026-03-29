@@ -9,6 +9,7 @@
 
 import React, { useState } from 'react';
 import { Target, AlertTriangle, Eye, Check, X, Loader2 } from 'lucide-react';
+import toast from 'react-hot-toast';
 
 const IncidentsTable = ({ incidents }) => {
   const [expandedRow, setExpandedRow] = useState(null);
@@ -22,7 +23,9 @@ const IncidentsTable = ({ incidents }) => {
   const handleAction = (id, type) => {
     // Simulating an API call to the backend LangGraph node or SAP system to approve/reject the Work Order
     setProcessingId(id);
-    console.log(`[API] Dispatching SAP Workflow Execution -> Type: ${type}, ID: ${id}`);
+    
+    // Genuine UI Update: Generating a system toast to notify the engineer dynamically
+    const toastId = toast.loading(`Dispatching SAP Workflow [ID: ${id}]`);
     
     setTimeout(() => {
       setTableData(prev => prev.map(incident => {
@@ -36,6 +39,12 @@ const IncidentsTable = ({ incidents }) => {
       }));
       setProcessingId(null);
       setExpandedRow(null); // Auto close reasoning
+      
+      if (type === 'APPROVE') {
+        toast.success("LangGraph Workflow Executed. SAP Ticket Deployed.", { id: toastId });
+      } else {
+        toast.error("Execution Rejected by Human Supervisor.", { id: toastId });
+      }
     }, 1500);
   };
 
