@@ -2,7 +2,7 @@
  * CarbonOps Enterprise Industrial OS
  * 
  * Capability: LangGraph Pipeline Connector
- * Version: 1.0.0
+ * Version: 1.1.0 (LTS Production Launch)
  * Architecture: LangChain / OpenAI Integration Layer
  * Owner: Puneet Divedi
  */

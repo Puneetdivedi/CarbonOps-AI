@@ -2,7 +2,7 @@
  * CarbonOps Enterprise Industrial OS
  * 
  * Capability: ESG Compliance Desk - Simulates RAG generation of legal ISSB and EU-ETS emission disclosure PDFs.
- * Version: 1.0.0
+ * Version: 1.1.0 (LTS Production Launch)
  * Architecture: GenAI / Low Code Data Pipeline
  * Owner: Puneet Divedi
  */

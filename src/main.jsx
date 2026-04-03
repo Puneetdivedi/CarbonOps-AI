@@ -2,7 +2,7 @@
  * CarbonOps Enterprise Industrial OS
  * 
  * Capability: Application Entry Point - Boots React 18 Concurrent Mode for high-performance DOM manipulation.
- * Version: 1.0.0
+ * Version: 1.1.0 (LTS Production Launch)
  * Architecture: GenAI / Low Code Data Pipeline
  * Owner: Puneet Divedi
  */

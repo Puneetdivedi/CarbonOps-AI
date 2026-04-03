@@ -2,7 +2,7 @@
  * CarbonOps Enterprise Industrial OS
  * 
  * Capability: Universal KPI Card - A hyper-reusable component rendering dynamic threshold data and status icons.
- * Version: 1.0.0
+ * Version: 1.1.0 (LTS Production Launch)
  * Architecture: GenAI / Low Code Data Pipeline
  * Owner: Puneet Divedi
  */

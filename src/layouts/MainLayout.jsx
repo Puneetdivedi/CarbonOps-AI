@@ -2,7 +2,7 @@
  * CarbonOps Enterprise Industrial OS
  * 
  * Capability: Primary Flex Wrapper - Governs the persistent UI shell (Sidebar, Header, Footer) injecting user context.
- * Version: 1.0.0
+ * Version: 1.1.0 (LTS Production Launch)
  * Architecture: GenAI / Low Code Data Pipeline
  * Owner: Puneet Divedi
  */

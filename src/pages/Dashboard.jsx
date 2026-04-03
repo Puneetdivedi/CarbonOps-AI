@@ -2,7 +2,7 @@
  * CarbonOps Enterprise Industrial OS
  * 
  * Capability: Executive Dashboard - Simulates live IoT telemetry, LangGraph Workflow tracking, and OEE metrics display.
- * Version: 1.0.0
+ * Version: 1.1.0 (LTS Production Launch)
  * Architecture: GenAI / Low Code Data Pipeline
  * Owner: Puneet Divedi
  */

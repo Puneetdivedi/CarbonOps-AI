@@ -2,7 +2,7 @@
  * CarbonOps Enterprise Industrial OS
  * 
  * Capability: Generative Chat Interface - Connects to the LLM agent for natural language querying of the factory dataset.
- * Version: 1.0.0
+ * Version: 1.1.0 (LTS Production Launch)
  * Architecture: GenAI / Low Code Data Pipeline (Streaming)
  * Owner: Puneet Divedi
  */
